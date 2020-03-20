@@ -13,4 +13,5 @@ def handler(event, context):
     creds = context.credentials
     envs['accessKeyId'] = creds.accessKeyId
     envs['accessKeySecret'] = creds.accessKeySecret
+    envs['securityToken'] = creds.securityToken
     return index.handler(json.loads(event))
