@@ -2,7 +2,16 @@
 Aliyun python function handler wrapper
 
 """
-from . import index
+import index
+import os
+import json
 
 def handler(event, context):
-    return index.handler(event)
+    envs = os.environ
+    envs['jointfaas_env'] = 'aliyun'
+    envs['region']  = context.region
+    creds = context.credentials
+    envs['accessKeyId'] = creds.accessKeyId
+    envs['accessKeySecret'] = creds.accessKeySecret
+    envs['securityToken'] = creds.securityToken
+    return index.handler(json.loads(event))
